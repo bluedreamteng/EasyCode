@@ -56,6 +56,9 @@ public class TableInfo {
      * 其他列
      */
     private List<ColumnInfo> otherColumn;
+
+
+    private List<List<ColumnInfo>> otherColumnWithGroup2;
     /**
      * 保存的包名称
      */
