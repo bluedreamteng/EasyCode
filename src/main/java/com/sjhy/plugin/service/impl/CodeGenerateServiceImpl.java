@@ -248,6 +248,7 @@ public class CodeGenerateServiceImpl implements CodeGenerateService {
         //工具类
         param.put("tool", GlobalTool.getInstance());
         param.put("time", TimeUtils.getInstance());
+        param.put("collectionutil",new CollectionUtil());
         // 项目路径
         param.put("projectPath", project.getBasePath());
         // Database数据库工具

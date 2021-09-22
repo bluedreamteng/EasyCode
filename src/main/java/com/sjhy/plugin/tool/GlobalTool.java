@@ -3,6 +3,7 @@ package com.sjhy.plugin.tool;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.ExceptionUtil;
 import com.intellij.util.ReflectionUtil;
 import com.sjhy.plugin.entity.DebugField;
@@ -366,5 +367,13 @@ public class GlobalTool extends NameUtils {
         } catch (IOException | ClassNotFoundException e) {
             return null;
         }
+    }
+
+    public String toLowerCase(String str) {
+        return StringUtil.toLowerCase(str);
+    }
+
+    public String toUpperCase(String str) {
+        return StringUtil.toUpperCase(str);
     }
 }
