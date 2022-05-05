@@ -68,7 +68,7 @@ public class TableSettingDialog extends JDialog {
     }
 
     private class TableModel extends DefaultTableModel {
-        Class<?>[] types =  {String.class,String.class,Boolean.class,Integer.class,Boolean.class,Integer.class,Boolean.class,Integer.class};
+        Class<?>[] types =  {String.class,String.class,Boolean.class,Integer.class,Boolean.class,Integer.class,Boolean.class,Integer.class,Boolean.class,Integer.class};
 
         public TableModel() {
             addColumn("名称");
@@ -79,11 +79,15 @@ public class TableSettingDialog extends JDialog {
             addColumn("搜索排序");
             addColumn("编辑");
             addColumn("编辑排序");
+            addColumn("详情");
+            addColumn("详情排序");
             TableInfo tableInfo = new TableInfo(dbTable);
             tableInfo.getFullColumn().forEach(columnInfo -> {
                 List<Object> dataList = new ArrayList<>();
                 dataList.add(columnInfo.getName());
                 dataList.add(columnInfo.getComment());
+                dataList.add(Boolean.FALSE);
+                dataList.add(999);
                 dataList.add(Boolean.FALSE);
                 dataList.add(999);
                 dataList.add(Boolean.FALSE);
@@ -120,6 +124,8 @@ public class TableSettingDialog extends JDialog {
             columnSetting.setSearchOrder((Integer) table.getModel().getValueAt(i,5));
             columnSetting.setShowEdit((boolean) table.getModel().getValueAt(i,6));
             columnSetting.setEditOrder((Integer) table.getModel().getValueAt(i,7));
+            columnSetting.setShowDetail((boolean) table.getModel().getValueAt(i,8));
+            columnSetting.setDetailOrder((Integer) table.getModel().getValueAt(i,9));
             tableSetting.put(name,columnSetting);
         }
         dispose();

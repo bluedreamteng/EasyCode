@@ -1,0 +1,61 @@
+##定义初始变量
+#set($className = $tool.firstUpperCase($tool.toLowerCase($tableInfo.name)))
+##拿到主键
+#if(!$tableInfo.pkColumn.isEmpty())
+    #set($pk = $tableInfo.pkColumn.get(0))
+#end
+##设置回调
+$!callback.setFileName($tool.append($className, ".java"))
+$!callback.setSavePath($tool.append($tableInfo.savePath, "/entity"))
+
+#if($tableInfo.savePackageName != "")
+package $!{tableInfo.savePackageName}.entity;
+#else
+        package entity;
+#{end}
+
+import java.util.Date;
+
+import com.epoint.core.BaseEntity;
+import com.epoint.core.annotation.Entity;
+import com.epoint.core.annotation.EntityLength;
+
+/**
+ * ${tableInfo.comment}实体
+ *
+ * @author ztf
+ */
+@Entity(table = "$tableInfo.originalSqlName" , id = "$pk.name" )
+public class $className extends BaseEntity implements Cloneable
+        {
+private static final long serialVersionUID=1L;
+
+
+#foreach($eachColumnInfo in $tableInfo.fullColumn)
+    #if($eachColumnInfo.comment)
+    /**
+     * $eachColumnInfo.comment
+     */
+    #end
+    #if($eachColumnInfo.type=="java.lang.String")
+    @EntityLength(length = $eachColumnInfo.length)
+    #end
+    #set($firstUppername = $tool.firstUpperCase($tool.toLowerCase($eachColumnInfo.name)))
+    #set($lowername = $tool.toLowerCase($eachColumnInfo.name))
+public $eachColumnInfo.shortType get${firstUppername}(){
+    #if($eachColumnInfo.type=="java.lang.Double")
+            return super.getDouble("$lowername" );
+    #elseif($eachColumnInfo.type=="java.lang.Integer")
+            return super.getInt("$lowername" );
+    #elseif($eachColumnInfo.type=="java.util.Date")
+            return super.getDate("$lowername" );
+    #else
+            return super.get("$lowername" );
+    #end
+        }
+
+public void set${firstUppername} ($eachColumnInfo.shortType $lowername) {
+        super.set("$lowername",$lowername);
+        }
+#end
+        }

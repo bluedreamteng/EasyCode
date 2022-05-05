@@ -10,4 +10,6 @@ public class ColumnSetting {
     private Integer searchOrder;
     private boolean showEdit;
     private Integer editOrder;
+    private boolean showDetail;
+    private Integer detailOrder;
 }

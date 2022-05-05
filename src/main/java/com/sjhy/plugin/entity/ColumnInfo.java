@@ -53,6 +53,10 @@ public class ColumnInfo {
 
     private Integer editOrder;
 
+    private boolean showDetail;
+
+    private Integer detailOrder;
+
 
     /**
      * 扩展数据

@@ -76,6 +76,8 @@ public class TableInfo {
                 columnInfo.setSearchOrder(columnSetting.getSearchOrder());
                 columnInfo.setShowEdit(columnSetting.isShowEdit());
                 columnInfo.setEditOrder(columnSetting.getEditOrder());
+                columnInfo.setShowDetail(columnSetting.isShowDetail());
+                columnInfo.setDetailOrder(columnSetting.getDetailOrder());
             }
         });
         List<ColumnInfo> listColumn = getFullColumn().stream().filter(ColumnInfo::isShowList)
@@ -89,6 +91,10 @@ public class TableInfo {
         List<ColumnInfo> editColumn = getFullColumn().stream().filter(ColumnInfo::isShowEdit)
                 .sorted(Comparator.comparing(ColumnInfo::getEditOrder)).collect(Collectors.toList());
         setEditColumn(editColumn);
+
+        List<ColumnInfo> detailColumn = getFullColumn().stream().filter(ColumnInfo::isShowDetail)
+                .sorted(Comparator.comparing(ColumnInfo::getDetailOrder)).collect(Collectors.toList());
+        setDetailColumn(detailColumn);
     }
 
     /**
@@ -170,6 +176,12 @@ public class TableInfo {
 
     public List<List<ColumnInfo>> getEditColumnWithGroup(int unitSize) {
         return CollectionUtil.splitList(editColumn,unitSize);
+    }
+
+    private List<ColumnInfo> detailColumn;
+
+    public List<List<ColumnInfo>> getDetailColumnWithGroup(int unitSize) {
+        return CollectionUtil.splitList(detailColumn,unitSize);
     }
 
 

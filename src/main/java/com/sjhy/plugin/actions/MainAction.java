@@ -55,10 +55,6 @@ public class MainAction extends AnAction {
         tableSettingDialog.open();
         Map<String, ColumnSetting> tableSetting = tableSettingDialog.getTableSetting();
         TableInfo tableInfo = new TableInfo(CacheDataUtils.getInstance().getSelectDbTable(), tableSetting);
-        System.out.println(tableInfo.getSearchColumn());
-        System.out.println(tableInfo.getListColumn());
-        System.out.println(tableInfo.getEditColumn());
-        System.out.println(tableInfo.getSearchColumn());
         new SelectSavePath(project,tableInfo).open();
     }
 }
