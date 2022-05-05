@@ -42,10 +42,15 @@ public class ColumnInfo {
     private boolean custom;
 
     private boolean showList;
+
     private Integer listOrder;
+
     private boolean showSearch;
+
     private Integer searchOrder;
+
     private boolean showEdit;
+
     private Integer editOrder;
 
 
