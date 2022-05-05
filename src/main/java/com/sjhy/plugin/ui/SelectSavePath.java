@@ -126,11 +126,14 @@ public class SelectSavePath extends JDialog {
      */
     private boolean entityMode;
 
+    private TableInfo tableInfo;
+
     /**
      * 构造方法
      */
-    public SelectSavePath(Project project) {
+    public SelectSavePath(Project project,TableInfo tableInfo) {
         this(project, false);
+        this.tableInfo = tableInfo;
     }
 
     /**
@@ -230,11 +233,12 @@ public class SelectSavePath extends JDialog {
             }
         }
         // 保存配置
-        TableInfo tableInfo = null;
-        if(!entityMode) {
-            tableInfo = tableInfoService.getTableInfoAndConfig(cacheDataUtils.getSelectDbTable());
-        } else {
-            tableInfo = tableInfoService.getTableInfoAndConfigByPsiClass(cacheDataUtils.getSelectPsiClass());
+        if(tableInfo == null) {
+            if(!entityMode) {
+                tableInfo = tableInfoService.getTableInfoAndConfig(cacheDataUtils.getSelectDbTable());
+            } else {
+                tableInfo = tableInfoService.getTableInfoAndConfigByPsiClass(cacheDataUtils.getSelectPsiClass());
+            }
         }
         tableInfo.setSavePath(savePath);
         tableInfo.setSavePackageName(packageField.getText());

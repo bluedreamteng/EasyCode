@@ -106,9 +106,9 @@ public class TableInfoServiceImpl implements TableInfoService {
             // 列类型
             columnInfo.setType(getColumnType(column.getDataType().getSpecification()));
             // 短类型
-            columnInfo.setShortType(nameUtils.getClsNameByFullName(columnInfo.getType()));
+            columnInfo.setShortType(NameUtils.getInstance().getClsNameByFullName(columnInfo.getType()));
             // 列名
-            columnInfo.setName(nameUtils.getJavaName(column.getName()));
+            columnInfo.setName(NameUtils.getInstance().getJavaName(column.getName()));
             // 列注释
             columnInfo.setComment(column.getComment());
             // 扩展项

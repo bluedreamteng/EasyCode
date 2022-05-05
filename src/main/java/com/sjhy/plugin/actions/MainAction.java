@@ -3,11 +3,17 @@ package com.sjhy.plugin.actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.sjhy.plugin.entity.ColumnSetting;
+import com.sjhy.plugin.entity.TableInfo;
+import com.sjhy.plugin.service.CodeGenerateService;
 import com.sjhy.plugin.service.TableInfoService;
 import com.sjhy.plugin.tool.CacheDataUtils;
 import com.sjhy.plugin.ui.SelectSavePath;
+import com.sjhy.plugin.ui.TableSettingDialog;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 /**
  * 代码生成菜单
@@ -43,7 +49,16 @@ public class MainAction extends AnAction {
             // 没通过不打开窗口
             return;
         }
-        //开始处理
-        new SelectSavePath(event.getProject()).open();
+//        //开始处理
+//        new SelectSavePath(event.getProject()).open();
+        TableSettingDialog tableSettingDialog = new TableSettingDialog(CacheDataUtils.getInstance().getSelectDbTable());
+        tableSettingDialog.open();
+        Map<String, ColumnSetting> tableSetting = tableSettingDialog.getTableSetting();
+        TableInfo tableInfo = new TableInfo(CacheDataUtils.getInstance().getSelectDbTable(), tableSetting);
+        System.out.println(tableInfo.getSearchColumn());
+        System.out.println(tableInfo.getListColumn());
+        System.out.println(tableInfo.getEditColumn());
+        System.out.println(tableInfo.getSearchColumn());
+        new SelectSavePath(project,tableInfo).open();
     }
 }

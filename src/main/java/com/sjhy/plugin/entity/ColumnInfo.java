@@ -40,6 +40,15 @@ public class ColumnInfo {
      * 标记是否为自定义附加列
      */
     private boolean custom;
+
+    private boolean showList;
+    private Integer listOrder;
+    private boolean showSearch;
+    private Integer searchOrder;
+    private boolean showEdit;
+    private Integer editOrder;
+
+
     /**
      * 扩展数据
      */
