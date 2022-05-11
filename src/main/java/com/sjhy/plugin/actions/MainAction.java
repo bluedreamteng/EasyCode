@@ -5,7 +5,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.sjhy.plugin.entity.ColumnSetting;
 import com.sjhy.plugin.entity.TableInfo;
-import com.sjhy.plugin.service.CodeGenerateService;
 import com.sjhy.plugin.service.TableInfoService;
 import com.sjhy.plugin.tool.CacheDataUtils;
 import com.sjhy.plugin.ui.SelectSavePath;

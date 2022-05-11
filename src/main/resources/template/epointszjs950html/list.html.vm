@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>学生列表</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- 请修改相对路径 -->
+    <script src="../../../frame/fui/js/cssboot.js"></script>
+</head>
+
+<body>
+<!-- 必须有，加载时的loading效果 -->
+<div class="page-loading"></div>
+<!-- title区域 -->
+<div class="fui-title">
+    <span class="fui-title-text">学生列表</span>
+
+    <div class="r">
+        <span class="mini-button" plain="true" data-role="refresh"
+              iconCls="icon-refresh">刷新</span>
+    </div>
+</div>
+<!-- toolbar区域 -->
+<div class="fui-toolbar">
+    <a class="mini-button" state="primary" onclick="openAdd" id="btnAdd"> 新增 </a>
+    <a id="btnDel" state="danger" class="mini-button" onclick="szjs.deleteData">删除选定 </a>
+    <a class="mini-dataexport" id="dataexport" gridId="datagrid" fileName="查询列表" action="getExportModel"
+       extraId="fui-form"></a>
+</div>
+<!-- 条件区域 -->
+<div class="fui-condition">
+    <div class="fui-form" id="fui-form">
+        <div id="cform" role="form">
+            <div role="row">
+                <div role="control" label="设备序列号">
+                    <div id="search_name" class="mini-textbox" bind="databean.name" vtype="maxLength:200"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a callback="search" role="searcher"></a>
+</div>
+
+<!-- 内容区域 -->
+<div id="fuiContent" class="fui-content">
+    <div id="datagrid" class="mini-datagrid" idField="rowguid" action="getDataGridData" sortOrder="desc"
+         showPager="true" style="height: 100%;" allowResize="true" multiSelect="true" allowCellEdit="true"
+         allowCellSelect="true" editNextOnEnterKey="true" editNextRowCell="true">
+        <div property="columns">
+            <div type="checkcolumn" width="60"></div>
+            <div type="indexcolumn" width="60" align="left" headerAlign="left">序</div>
+            <div field="name">
+                姓名
+            </div>
+            <div field="age">
+                年龄
+            </div>
+            <div width="60" align="left" headerAlign="left" renderer="szjs.onEdit">
+                修改
+            </div>
+            <div width="60" align="left" headerAlign="left" renderer="szjs.onDetail">
+                查看
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 请修改相对路径 -->
+<script src="../../../rest/resource/jsboot"></script>
+<script>
+    // 初始化页面
+    epoint.initPage('studentlistaction', null, function (data) {
+        szjs.init_list(data);
+    });
+
+    var openAdd = function () {
+        epoint.openTopDialog('新增', './student_edit', szjs.searchData);
+    }
+
+    var openEdit = function (rowguid) {
+        epoint.openTopDialog('修改', './student_edit?RowGuid=' + rowguid, szjs.searchData);
+    }
+
+    var openDetail = function (rowguid) {
+        epoint.openTopDialog('查看', './student_detail?RowGuid=' + rowguid, szjs.searchData);
+    }
+</script>
+</body>
+</html>

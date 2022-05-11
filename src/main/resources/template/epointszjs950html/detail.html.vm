@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>学生详情页面</title>
+    <!-- 请修改相对路径 -->
+    <script src="../../../frame/fui/js/cssboot.js"></script>
+</head>
+
+<body>
+<!-- 必须有，加载时的loading效果 -->
+<div class="page-loading"></div>
+<!-- toolbar区域 -->
+<div class="fui-toolbar">
+    <div class="btn-group mr10">
+        <a class="mini-button" state="primary" onclick="epoint.closeDialog">关闭</a>
+    </div>
+</div>
+
+<!-- 内容区域 -->
+<div class="fui-content">
+    <div class="fui-accordions">
+        <div role="accordion" opened="true">
+            <div role="head" title="表单填写"></div>
+            <div role="body">
+                <div class="fui-form">
+                    <div role="form">
+                        <div role="row">
+                            <div role="control" label="备注">
+                                <div class="mini-outputtext" bind="dataBean.remark"></div>
+                            </div>
+                            <div role="control" label="生日">
+                                <div class="mini-outputtext" bind="dataBean.birthday"
+                                     data-options="{format:'yyyy-MM-dd HH:mm:ss'}"></div>
+                            </div>
+                        </div>
+                        <div role="row">
+                            <div role="control" label="绩点">
+                                <div class="mini-outputtext" bind="dataBean.gpa"></div>
+                            </div>
+                            <div role="control" label="年龄">
+                                <div class="mini-outputtext" bind="dataBean.age"></div>
+                            </div>
+                        </div>
+                        <div role="row">
+                            <div role="control" label="姓名">
+                                <div class="mini-outputtext" bind="dataBean.name"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 请修改相对路径 -->
+<script src="../../../rest/resource/jsboot"></script>
+<script>
+    SrcBoot.output(['frame/pages/ordtask/taskmateriallist/taskmateriallist.js']);
+</script>
+<script>
+    // 初始化页面
+    epoint.initPage('studentdetailaction', null, function (data) {
+        //初始化加载数据
+        szjs.init_detail(data);
+    });
+</script>
+</body>
+</html>

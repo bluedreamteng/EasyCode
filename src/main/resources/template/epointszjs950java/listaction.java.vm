@@ -1,0 +1,95 @@
+package com.epoint.szjs.student.action;
+
+import com.epoint.core.dto.model.DataGridModel;
+import com.epoint.core.utils.string.StringUtil;
+import com.epoint.database.peisistence.crud.impl.model.PageData;
+import com.epoint.frame.service.metadata.mis.util.ListGenerator;
+import com.epoint.szjs.frame.base.action.SzjsBaseListAction;
+import com.epoint.szjs.frame.base.util.SzjsContextUtil;
+import com.epoint.szjs.student.entity.Student;
+import com.epoint.szjs.student.service.StudentService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 学生list页面对应的后台
+ *
+ * @author ztf
+ * @version [版本号, 2022-05-11 14:51:16]
+ */
+@RestController("studentlistaction")
+@Scope("request")
+public class StudentListAction extends SzjsBaseListAction {
+
+    private StudentService service = SzjsContextUtil.getBean(StudentService.class);
+
+    //学生实体对象
+    private Student dataBean;
+
+    //表格控件model
+    private DataGridModel<Student> model;
+
+    /**
+     * 删除选定
+     */
+    public void deleteSelect() {
+        List<String> keyList = this.model.getSelectKeys();
+        List<Student> beanList = new ArrayList<>();
+        if (null != keyList) {
+            for (String rowguid : keyList) {
+                // 根据业务需求自行添加业务逻辑确认什么时间可以删除对应业务数据
+                Student bean = new Student();
+                bean.setRowguid(rowguid);
+                beanList.add(bean);
+            }
+        }
+        if (!beanList.isEmpty()) {
+            //批量删除，每次批量操作不超过100个，超出100时，会自动分批次删除
+            this.service.batchDelete(beanList);
+        }
+        addCallbackParam("msg", "删除成功！");
+    }
+
+    public DataGridModel<Student> getDataGridData() {
+        // 获得表格对象
+        if (model == null) {
+            model = new DataGridModel<Student>() {
+
+                @Override
+                public List<Student> fetchData(int first, int pageSize, String sortField, String sortOrder) {
+                    //增加默认排序
+                    if (StringUtil.isBlank(sortField)) {
+                        sortField = "operatedate";
+                        sortOrder = "desc";
+                    }
+                    // 获取where条件Map集合
+                    Map<String, Object> conditionMap = ListGenerator.getSearchMap(getRequestContext().getComponents(),
+                            sortField, sortOrder);
+                    PageData<Student> pageData = service.paginatorList(conditionMap, Student.class, first, pageSize);
+                    this.setRowCount(pageData.getRowCount());
+                    this.setEncryptFieldNames("rowguid");
+                    return pageData.getList();
+                }
+
+            };
+        }
+        return model;
+    }
+
+    public Student getDataBean() {
+        if (dataBean == null) {
+            dataBean = new Student();
+        }
+        return dataBean;
+    }
+
+    public void setDataBean(Student dataBean) {
+        this.dataBean = dataBean;
+    }
+
+
+}

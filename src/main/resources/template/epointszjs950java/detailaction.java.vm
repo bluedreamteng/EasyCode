@@ -1,0 +1,35 @@
+package com.epoint.szjs.student.action;
+
+import com.epoint.core.utils.string.StringUtil;
+import com.epoint.szjs.frame.base.action.SzjsBaseContentAction;
+import com.epoint.szjs.frame.base.util.SzjsContextUtil;
+import com.epoint.szjs.student.entity.Student;
+import com.epoint.szjs.student.service.StudentService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 学生新增页面对应的后台
+ *
+ * @author ztf
+ */
+@RestController("studentdetailaction")
+@Scope("request")
+public class StudentDetailAction extends SzjsBaseContentAction {
+
+    private final StudentService service = SzjsContextUtil.getBean(StudentService.class);
+    //学生实体对象
+    private Student dataBean;
+
+
+    public Student getDataBean() {
+        if (null == dataBean) {
+            dataBean = this.getMainDataBean(Student.class);
+        }
+        return dataBean;
+    }
+
+    public void setDataBean(Student dataBean) {
+        this.dataBean = dataBean;
+    }
+}

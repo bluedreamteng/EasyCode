@@ -25,11 +25,9 @@ import com.epoint.core.annotation.EntityLength;
  *
  * @author ztf
  */
-@Entity(table = "$tableInfo.originalSqlName" , id = "$pk.name" )
-public class $className extends BaseEntity implements Cloneable
-        {
-private static final long serialVersionUID=1L;
-
+@Entity(table = "$tableInfo.originalSqlName", id = "$pk.name")
+public class $className extends BaseEntity implements Cloneable{
+    private static final long serialVersionUID=1L;
 
 #foreach($eachColumnInfo in $tableInfo.fullColumn)
     #if($eachColumnInfo.comment)
@@ -42,20 +40,20 @@ private static final long serialVersionUID=1L;
     #end
     #set($firstUppername = $tool.firstUpperCase($tool.toLowerCase($eachColumnInfo.name)))
     #set($lowername = $tool.toLowerCase($eachColumnInfo.name))
-public $eachColumnInfo.shortType get${firstUppername}(){
+    public $eachColumnInfo.shortType get${firstUppername}(){
     #if($eachColumnInfo.type=="java.lang.Double")
-            return super.getDouble("$lowername" );
+            return super.getDouble("$lowername");
     #elseif($eachColumnInfo.type=="java.lang.Integer")
-            return super.getInt("$lowername" );
+            return super.getInt("$lowername");
     #elseif($eachColumnInfo.type=="java.util.Date")
-            return super.getDate("$lowername" );
+            return super.getDate("$lowername");
     #else
-            return super.get("$lowername" );
+            return super.get("$lowername");
     #end
-        }
+    }
 
-public void set${firstUppername} ($eachColumnInfo.shortType $lowername) {
+    public void set${firstUppername} ($eachColumnInfo.shortType $lowername) {
         super.set("$lowername",$lowername);
-        }
-#end
-        }
+    }
+    #end
+}

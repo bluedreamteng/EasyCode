@@ -26,6 +26,73 @@ import java.util.stream.Collectors;
 @Data
 public class TableInfo {
 
+    /**
+     * 原始对象
+     */
+    @JsonIgnore
+    private DbTable obj;
+
+    /**
+     * 原始对象（从实体生成）
+     */
+    @JsonIgnore
+    private PsiClass psiClassObj;
+
+    /**
+     * 表名（首字母大写）
+     */
+    private String name;
+    /**
+     * 表名前缀
+     */
+    private String preName;
+    /**
+     * 注释
+     */
+    private String comment;
+    /**
+     * 模板组名称
+     */
+    private String templateGroupName;
+    /**
+     * 所有列
+     */
+    private List<ColumnInfo> fullColumn;
+    /**
+     * 主键列
+     */
+    private List<ColumnInfo> pkColumn;
+    /**
+     * 其他列
+     */
+    private List<ColumnInfo> otherColumn;
+
+
+    private List<ColumnInfo> searchColumn;
+
+    private List<ColumnInfo> listColumn;
+
+    private List<ColumnInfo> editColumn;
+
+    private List<ColumnInfo> detailColumn;
+
+
+    /**
+     * 保存的包名称
+     */
+    private String savePackageName;
+    /**
+     * 保存路径
+     */
+    private String savePath;
+    /**
+     * 保存的model名称
+     */
+    private String saveModelName;
+
+    public TableInfo() {
+    }
+
     public TableInfo(@NotNull DbTable dbTable) {
         setObj(dbTable);
         // 设置类名
@@ -78,23 +145,28 @@ public class TableInfo {
                 columnInfo.setEditOrder(columnSetting.getEditOrder());
                 columnInfo.setShowDetail(columnSetting.isShowDetail());
                 columnInfo.setDetailOrder(columnSetting.getDetailOrder());
+            } else {
+                columnInfo.setShowList(Boolean.FALSE);
+                columnInfo.setListOrder(999);
+                columnInfo.setShowSearch(Boolean.FALSE);
+                columnInfo.setSearchOrder(999);
+                columnInfo.setShowEdit(Boolean.FALSE);
+                columnInfo.setEditOrder(999);
+                columnInfo.setShowDetail(Boolean.FALSE);
+                columnInfo.setDetailOrder(999);
             }
         });
-        List<ColumnInfo> listColumn = getFullColumn().stream().filter(ColumnInfo::isShowList)
+        listColumn = getFullColumn().stream().filter(ColumnInfo::isShowList)
                 .sorted(Comparator.comparing(ColumnInfo::getListOrder)).collect(Collectors.toList());
-        setListColumn(listColumn);
 
-        List<ColumnInfo> searchColumn = getFullColumn().stream().filter(ColumnInfo::isShowSearch)
+        searchColumn = getFullColumn().stream().filter(ColumnInfo::isShowSearch)
                 .sorted(Comparator.comparing(ColumnInfo::getSearchOrder)).collect(Collectors.toList());
-        setSearchColumn(searchColumn);
 
-        List<ColumnInfo> editColumn = getFullColumn().stream().filter(ColumnInfo::isShowEdit)
+        editColumn = getFullColumn().stream().filter(ColumnInfo::isShowEdit)
                 .sorted(Comparator.comparing(ColumnInfo::getEditOrder)).collect(Collectors.toList());
-        setEditColumn(editColumn);
 
-        List<ColumnInfo> detailColumn = getFullColumn().stream().filter(ColumnInfo::isShowDetail)
+        detailColumn = getFullColumn().stream().filter(ColumnInfo::isShowDetail)
                 .sorted(Comparator.comparing(ColumnInfo::getDetailOrder)).collect(Collectors.toList());
-        setDetailColumn(detailColumn);
     }
 
     /**
@@ -114,89 +186,19 @@ public class TableInfo {
         return "java.lang.Object";
     }
 
-
-    public TableInfo() {
-    }
-
-    /**
-     * 原始对象
-     */
-    @JsonIgnore
-    private DbTable obj;
-
-    /**
-     * 原始对象（从实体生成）
-     */
-    @JsonIgnore
-    private PsiClass psiClassObj;
-
-    /**
-     * 表名（首字母大写）
-     */
-    private String name;
-    /**
-     * 表名前缀
-     */
-    private String preName;
-    /**
-     * 注释
-     */
-    private String comment;
-    /**
-     * 模板组名称
-     */
-    private String templateGroupName;
-    /**
-     * 所有列
-     */
-    private List<ColumnInfo> fullColumn;
-    /**
-     * 主键列
-     */
-    private List<ColumnInfo> pkColumn;
-    /**
-     * 其他列
-     */
-    private List<ColumnInfo> otherColumn;
-
-
-    private List<ColumnInfo> searchColumn;
-
     public List<List<ColumnInfo>> getSearchColumnWithGroup(int unitSize) {
         return CollectionUtil.splitList(searchColumn,unitSize);
     }
-
-    private List<ColumnInfo> listColumn;
 
     public List<List<ColumnInfo>> getListColumnWithGroup(int unitSize) {
         return CollectionUtil.splitList(listColumn,unitSize);
     }
 
-    private List<ColumnInfo> editColumn;
-
     public List<List<ColumnInfo>> getEditColumnWithGroup(int unitSize) {
         return CollectionUtil.splitList(editColumn,unitSize);
     }
 
-    private List<ColumnInfo> detailColumn;
-
     public List<List<ColumnInfo>> getDetailColumnWithGroup(int unitSize) {
         return CollectionUtil.splitList(detailColumn,unitSize);
     }
-
-
-
-    private List<List<ColumnInfo>> otherColumnWithGroup2;
-    /**
-     * 保存的包名称
-     */
-    private String savePackageName;
-    /**
-     * 保存路径
-     */
-    private String savePath;
-    /**
-     * 保存的model名称
-     */
-    private String saveModelName;
 }

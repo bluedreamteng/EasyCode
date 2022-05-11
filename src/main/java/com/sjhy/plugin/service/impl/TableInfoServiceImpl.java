@@ -122,8 +122,6 @@ public class TableInfoServiceImpl implements TableInfoService {
                 tableInfo.getOtherColumn().add(columnInfo);
             }
         }
-        List<List<ColumnInfo>> otherColumnWithGroup = CollectionUtil.splitList(tableInfo.getOtherColumn(), 2);
-        tableInfo.setOtherColumnWithGroup2(otherColumnWithGroup);
         return tableInfo;
     }
 
